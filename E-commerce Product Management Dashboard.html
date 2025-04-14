@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Product Management Dashboard</title>
+  <style>
+    body { font-family: sans-serif; margin: 20px; }
+    input, button { margin: 8px 0; padding: 6px; width: 300px; display: block; }
+    .product { padding: 10px; border: 1px solid #ccc; margin: 10px 0; border-radius: 5px; }
+    .error { color: red; font-size: 0.9em; }
+  </style>
+</head>
+<body>
+
+  <h2>Add Product</h2>
+  <form id="productForm">
+    <input type="text" id="name" placeholder="Product Name" required />
+    <div id="nameError" class="error"></div>
+
+    <input type="number" id="price" placeholder="Price" required />
+    <div id="priceError" class="error"></div>
+
+    <input type="number" id="stock" placeholder="Stock" required />
+    <div id="stockError" class="error"></div>
+
+    <button type="submit">Add Product</button>
+  </form>
+
+  <hr>
+  <h2>Product List</h2>
+  <div id="productList"></div>
+
+  <script>
+    // ✅ Simple RxJS-like BehaviorSubject
+    class BehaviorSubject {
+      constructor(initialValue) {
+        this.value = initialValue;
+        this.listeners = [];
+      }
+      subscribe(listener) {
+        this.listeners.push(listener);
+        listener(this.value);
+      }
+      next(value) {
+        this.value = value;
+        this.listeners.forEach(l => l(value));
+      }
+      getValue() {
+        return this.value;
+      }
+    }
+
+    // ✅ Product Service (Handles data & API)
+    class ProductService {
+      constructor() {
+        this.products$ = new BehaviorSubject([]);
+      }
+
+      addProduct(product) {
+        const current = this.products$.getValue();
+        this.products$.next([...current, product]);
+      }
+
+      fetchProducts() {
+        fetch('https://fakestoreapi.com/products')
+          .then(res => res.json())
+          .then(data => {
+            const simplified = data.slice(0, 5).map(p => ({
+              name: p.title,
+              price: p.price,
+              stock: Math.floor(Math.random() * 100)
+            }));
+            this.products$.next(simplified);
+          });
+      }
+    }
+
+    const productService = new ProductService();
+
+    // ✅ DOM Elements
+    const form = document.getElementById('productForm');
+    const nameInput = document.getElementById('name');
+    const priceInput = document.getElementById('price');
+    const stockInput = document.getElementById('stock');
+
+    const nameError = document.getElementById('nameError');
+    const priceError = document.getElementById('priceError');
+    const stockError = document.getElementById('stockError');
+    const productList = document.getElementById('productList');
+
+    // ✅ Form Validation
+    function validateForm() {
+      let valid = true;
+      nameError.textContent = '';
+      priceError.textContent = '';
+      stockError.textContent = '';
+
+      if (!/^[a-zA-Z0-9 ]+$/.test(nameInput.value)) {
+        nameError.textContent = 'No special characters allowed';
+        valid = false;
+      }
+
+      if (priceInput.value <= 0) {
+        priceError.textContent = 'Price must be greater than 0';
+        valid = false;
+      }
+
+      if (stockInput.value < 0) {
+        stockError.textContent = 'Stock cannot be negative';
+        valid = false;
+      }
+
+      return valid;
+    }
+
+    // ✅ Submit Handler
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      if (!validateForm()) return;
+
+      const product = {
+        name: nameInput.value,
+        price: +priceInput.value,
+        stock: +stockInput.value
+      };
+      productService.addProduct(product);
+
+      // Clear inputs
+      nameInput.value = '';
+      priceInput.value = '';
+      stockInput.value = '';
+    });
+
+    // ✅ Realtime update (RxJS-like)
+    productService.products$.subscribe(products => {
+      productList.innerHTML = products.map(p => `
+        <div class="product">
+          <strong>${p.name}</strong><br>
+          Price: $${p.price}<br>
+          Stock: ${p.stock}
+        </div>
+      `).join('');
+    });
+
+    // ✅ Fetch from API on load
+    productService.fetchProducts();
+  </script>
+</body>
+</html>
