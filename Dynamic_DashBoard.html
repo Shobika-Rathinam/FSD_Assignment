@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dynamic Dashboard</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .nav { margin-bottom: 20px; }
+    .nav button { margin-right: 10px; }
+    .task { padding: 10px; border: 1px solid #ccc; margin: 5px 0; border-radius: 4px; }
+    .done { background-color: #d4edda; }
+    .in-progress { background-color: #fff3cd; }
+    .pending { background-color: #f8d7da; }
+  </style>
+</head>
+<body>
+
+  <div class="nav">
+    <button onclick="router.navigate('dashboard')">Dashboard</button>
+    <button onclick="router.navigate('tasks')">Tasks</button>
+  </div>
+
+  <div id="app"></div>
+
+  <script type="module">
+    // Simulate Routing
+    class Router {
+      constructor(private routes: any) {}
+
+      navigate(path: string) {
+        const view = this.routes[path];
+        if (view) {
+          document.getElementById('app')!.innerHTML = view.render();
+          view.afterRender && view.afterRender();
+        }
+      }
+    }
+
+    // Simulate Dependency Injection with a simple service
+    class TaskService {
+      getTasks() {
+        return [
+          { title: 'Design UI', status: 'done' },
+          { title: 'API Integration', status: 'in-progress' },
+          { title: 'Test cases', status: 'pending' },
+        ];
+      }
+    }
+
+    const taskService = new TaskService();
+
+    // Custom Directive-like behavior: apply styles based on status
+    function applyHighlighting() {
+      document.querySelectorAll<HTMLElement>('.task').forEach(el => {
+        const status = el.dataset.status;
+        el.classList.add(status!);
+      });
+    }
+
+    // Dashboard View
+    const Dashboard = {
+      render: () => `
+        <h2>Project Dashboard</h2>
+        <p>Welcome! Use the buttons above to navigate.</p>
+      `
+    };
+
+    // Tasks View
+    const Tasks = {
+      render: () => {
+        const tasks = taskService.getTasks();
+        return `
+          <h2>Task List</h2>
+          ${tasks.map(task => `
+            <div class="task" data-status="${task.status}">
+              <strong>${task.title}</strong> - <em>${task.status}</em>
+            </div>
+          `).join('')}
+        `;
+      },
+      afterRender: applyHighlighting
+    };
+
+    // Initialize Router
+    const router = new Router({
+      dashboard: Dashboard,
+      tasks: Tasks
+    });
+
+    // Load initial view
+    router.navigate('dashboard');
+  </script>
+</body>
+</html>
