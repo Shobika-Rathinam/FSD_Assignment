@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tech Conference 2025</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+  <header class="bg-dark text-white text-center py-5">
+    <h1>Tech Innovators Conference 2025</h1>
+    <p class="lead">April 25-27 | Silicon Valley, CA</p>
+  </header>
+
+  <!-- Schedule Section -->
+  <section class="container py-5" id="schedule">
+    <h2 class="mb-4">Event Schedule</h2>
+    <div class="row g-3">
+      <div class="col-md-4">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Day 1: Innovation</h5>
+            <p class="card-text">Keynotes, AI workshops, and product launches.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Day 2: Development</h5>
+            <p class="card-text">Coding sessions, DevOps talks, and networking.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Day 3: Future Tech</h5>
+            <p class="card-text">Web3, Quantum Computing, and closing ceremony.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Speaker Section -->
+  <section class="bg-light py-5" id="speakers">
+    <div class="container">
+      <h2 class="mb-4">Meet the Speakers</h2>
+      <div class="row g-4">
+        <div class="col-md-3 col-sm-6 text-center">
+          <img src="https://via.placeholder.com/150" class="rounded-circle mb-2" alt="Speaker 1">
+          <h5>Jane Doe</h5>
+          <p class="text-muted">AI Specialist, Google</p>
+        </div>
+        <div class="col-md-3 col-sm-6 text-center">
+          <img src="https://via.placeholder.com/150" class="rounded-circle mb-2" alt="Speaker 2">
+          <h5>John Smith</h5>
+          <p class="text-muted">Cloud Architect, Amazon</p>
+        </div>
+        <div class="col-md-3 col-sm-6 text-center">
+          <img src="https://via.placeholder.com/150" class="rounded-circle mb-2" alt="Speaker 3">
+          <h5>Emily Lee</h5>
+          <p class="text-muted">CTO, OpenAI</p>
+        </div>
+        <div class="col-md-3 col-sm-6 text-center">
+          <img src="https://via.placeholder.com/150" class="rounded-circle mb-2" alt="Speaker 4">
+          <h5>Raj Patel</h5>
+          <p class="text-muted">Cybersecurity Expert</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Registration Form -->
+  <section class="container py-5" id="register">
+    <h2 class="mb-4">Register Now</h2>
+    <form class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label">Full Name</label>
+        <input type="text" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Organization</label>
+        <input type="text" class="form-control">
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Role</label>
+        <select class="form-select">
+          <option selected>Choose...</option>
+          <option>Developer</option>
+          <option>Manager</option>
+          <option>Student</option>
+        </select>
+      </div>
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary">Submit Registration</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="bg-light py-5" id="faq">
+    <div class="container">
+      <h2 class="mb-4">FAQs</h2>
+      <div class="accordion" id="faqAccordion">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="q1">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#a1">
+              What is the event location?
+            </button>
+          </h2>
+          <div id="a1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">The event will be held at Silicon Valley Tech Center, CA.</div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="q2">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a2">
+              Is the event online or offline?
+            </button>
+          </h2>
+          <div id="a2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">It's an in-person event with select sessions live-streamed.</div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="q3">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a3">
+              Can I get a participation certificate?
+            </button>
+          </h2>
+          <div id="a3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">Yes, all attendees will receive digital certificates post-event.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="text-center py-3 bg-dark text-light">
+    &copy; 2025 Tech Innovators Conference. All rights reserved.
+  </footer>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
