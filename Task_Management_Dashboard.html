@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Task Management Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      padding: 20px;
+    }
+
+    .dashboard {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    h2, h3 {
+      text-align: center;
+    }
+
+    input, select {
+      padding: 8px;
+      margin: 5px;
+      width: calc(25% - 12px);
+    }
+
+    button {
+      padding: 10px 20px;
+      margin-top: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      background: #e9e9e9;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="dashboard">
+    <h2>Task Management Dashboard</h2>
+
+    <input type="text" id="taskTitle" placeholder="Task Title" />
+    <input type="date" id="taskDeadline" />
+    <input type="text" id="taskAssignee" placeholder="Assign To" />
+    <select id="taskStatus">
+      <option value="Pending">Pending</option>
+      <option value="In Progress">In Progress</option>
+      <option value="Completed">Completed</option>
+    </select>
+    <br>
+    <button onclick="addTask()">Add Task</button>
+
+    <h3>Task List</h3>
+    <ul id="taskList"></ul>
+  </div>
+
+  <script>
+    // Equivalent of TypeScript's interface
+    /**
+     * @typedef {Object} Task
+     * @property {number} id
+     * @property {string} title
+     * @property {string} deadline
+     * @property {string} assignee
+     * @property {string} status
+     */
+
+    // TypeScript-like Class
+    class TaskManager {
+      constructor() {
+        /** @type {Task[]} */
+        this.tasks = [];
+        this.idCounter = 1;
+      }
+
+      /**
+       * @param {string} title
+       * @param {string} deadline
+       * @param {string} assignee
+       * @param {string} status
+       */
+      addTask(title, deadline, assignee, status) {
+        const task = {
+          id: this.idCounter++,
+          title,
+          deadline,
+          assignee,
+          status
+        };
+        this.tasks.push(task);
+        this.renderTasks();
+      }
+
+      renderTasks() {
+        const taskList = document.getElementById('taskList');
+        taskList.innerHTML = '';
+        this.tasks.forEach(task => {
+          const li = document.createElement('li');
+          li.textContent = `[#${task.id}] ${task.title} | ${task.deadline} | ${task.assignee} | ${task.status}`;
+          taskList.appendChild(li);
+        });
+      }
+    }
+
+    const taskManager = new TaskManager();
+
+    function addTask() {
+      const title = document.getElementById('taskTitle').value;
+      const deadline = document.getElementById('taskDeadline').value;
+      const assignee = document.getElementById('taskAssignee').value;
+      const status = document.getElementById('taskStatus').value;
+
+      if (title && deadline && assignee && status) {
+        taskManager.addTask(title, deadline, assignee, status);
+
+        // Clear inputs
+        document.getElementById('taskTitle').value = '';
+        document.getElementById('taskDeadline').value = '';
+        document.getElementById('taskAssignee').value = '';
+        document.getElementById('taskStatus').value = 'Pending';
+      } else {
+        alert('Please fill in all fields');
+      }
+    }
+  </script>
+</body>
+</html>
